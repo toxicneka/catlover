@@ -14,13 +14,13 @@ graph TD
     end
 
     subgraph "Хранилища"
-        E[(Google Sheets *(User Types)*)]
-        F[(SQLite *(Group Reports)*)]
+        E[(Google Sheets <i>User Types</i>)]
+        F[(SQLite <i>Group Reports</i>)]
         J[RAG Knowledge Base]
     end
 
     subgraph "Внешние сервисы"
-        G[[LLM *(Gemini)*]]
+        G{{LLM <i>Gemini</i>}}
     end
 
     A -- Команды (внутренный протокол Telegram) --> B
@@ -31,5 +31,5 @@ graph TD
     D -- Анализ типов по HTTPS --> G
     D -- Получение данных чата по HTTPS --> I
     G -- Использует контекст по HTTPS --> J
-    I -- История сообщений *(Состав группы)* (API Telegram-бота, HTTPS) --> D
+    I -- История сообщений <i>Состав группы</i> (API Telegram-бота, HTTPS) --> D
 ```
