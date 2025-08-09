@@ -14,13 +14,13 @@ graph TD
     end
 
     subgraph "Хранилища"
-        E[(Google Sheets\nUser Types)]
-        F[(SQLite\nGroup Reports)]
+        E[(Google Sheets <i>User Types</i>)]
+        F[(SQLite <i>Group Reports</i>)]
         J[RAG Knowledge Base]
     end
 
     subgraph "Внешние сервисы"
-        G{{LLM\nGemini}}
+        G{{LLM <i>Gemini</i>}}
     end
 
     A -- Команды --> B
@@ -31,5 +31,5 @@ graph TD
     D -- Анализ типов --> G
     D -- Получение данных чата --> I
     G -- Использует контекст --> J
-    I -- История сообщений\nСостав группы --> D
+    I -- История сообщений <i>Состав группы</i> --> D
 ```
