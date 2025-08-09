@@ -6,7 +6,7 @@ graph TD
 
     subgraph "Telegram"
         B[Frontend Bot]
-        I[Telegram API]
+        I[Telegram Bot API]
     end
 
     subgraph "Backend"
@@ -16,32 +16,32 @@ graph TD
     subgraph "Хранилища"
         E[(Google Sheets <i>User Types</i>)]
         F[(SQLite <i>Group Reports</i>)]
-        J[RAG Knowledge Base]
+        J[RAG Knowledge Base<br><i>Vertex AI</i>]
     end
 
     subgraph "Внешние сервисы"
-        G{{LLM <i>Gemini</i>}}
+        G{{LLM <i>Gemini Pro 1.5</i>}}
     end
 
-    %% Прямые связи
-    A -- Команды --> B
-    B -- Webhook HTTPS --> D
-    D -- Запрос данных --> I
-    D -- Запрос шаблонов --> J
-    D -- Анализ ответов --> G
-    D -- Сохранение типов --> E
-    D -- Логирование отчетов --> F
-    G -- Контекстный запрос --> J
+    %% Прямые связи с протоколами
+    A -- Команды<br><i>MTProto</i> --> B
+    B -- Webhook<br><i>HTTPS/JSON</i> --> D
+    D -- Чтение/запись<br><i>HTTPS/REST</i> --> E
+    D -- CRUD операции<br><i>TCP/IP/SQL</i> --> F
+    D -- Векторные запросы<br><i>HTTPS/gRPC</i> --> J
+    D -- Анализ текста<br><i>HTTPS/JSON</i> --> G
+    D -- Данные чата<br><i>HTTPS/Bot API</i> --> I
+    G -- Контекстные запросы<br><i>HTTPS/RPC</i> --> J
     
-    %% Обратные связи (ответы)
-    B -- Ответы пользователю --> A
-    I -- Данные чата --> D
-    J -- Шаблоны взаимодействия --> D
-    G -- Результат типирования --> D
-    E -- Данные пользователей --> D
-    F -- История отчетов --> D
+    %% Обратные связи с протоколами
+    B -- Push-уведомления<br><i>HTTPS/JSON</i> --> A
+    I -- Структурированные данные<br><i>HTTPS/JSON</i> --> D
+    J -- Релевантные шаблоны<br><i>gRPC/Protobuf</i> --> D
+    G -- Структурированный ответ<br><i>JSON Schema</i> --> D
+    E -- User data<br><i>OAuth2/JSON</i> --> D
+    F -- Report metadata<br><i>SQL ResultSet</i> --> D
     
     %% Дополнительные связи
-    D -- Обновление кэша --> J
-    D -- Статистика использования --> F
+    D -- Кэширование<br><i>gRPC</i> --> J
+    D -- Аудит логов<br><i>TCP/IP</i> --> F
 ```
