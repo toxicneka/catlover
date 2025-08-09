@@ -16,11 +16,11 @@ graph TD
     subgraph "Хранилища"
         E[(Google Sheets <i>User Types</i>)]
         F[(SQLite <i>Group Reports</i>)]
-        J[RAG Knowledge Base<br><i>Vertex AI</i>]
+        J[RAG Knowledge Base<br>]
     end
 
     subgraph "Внешние сервисы"
-        G{{LLM <i>Gemini Pro 1.5</i>}}
+        G{{LLM <i>Gemini</i>}}
     end
 
     %% Прямые связи с протоколами
