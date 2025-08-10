@@ -1,11 +1,11 @@
 ```mermaid
 graph TD
     subgraph "Клиент"
-        A[Пользователь/Группа]
+        A[Пользователь Telegram]
     end
 
     subgraph "Telegram"
-        B[Frontend Bot]
+        B[Telegram Bot]
         I[Telegram API]
     end
 
@@ -14,22 +14,20 @@ graph TD
     end
 
     subgraph "Хранилища"
-        E[(Google Sheets <i>User Types</i>)]
-        F[(SQLite <i>Group Reports</i>)]
-        J[RAG Knowledge Base]
+        F[(SQLite <i>User Preferences</i>)]
+        J[RAG Knowledge Base <i>MangaDB</i>]
     end
 
     subgraph "Внешние сервисы"
-        G{{LLM <i>Gemini</i>}}
+        G{{LLM <i>GigaChat</i>}}
     end
 
-    A -- Команды (внутренный протокол Telegram) --> B
-    B -- Webhook по HTTPS --> D
-    D -- Чтение/запись по HTTPS --> E
-    D -- Чтение/запись по TCP/IP --> F
-    D -- Запрос шаблонов по HTTPS --> J
-    D -- Анализ типов по HTTPS --> G
-    D -- Получение данных чата по HTTPS --> I
-    G -- Использует контекст по HTTPS --> J
-    I -- История сообщений <i>Состав группы</i> (API Telegram-бота, HTTPS) --> D
+    A -- "1. Отправка списка любимых тайтлов\n(например: 'Berserk, Vagabond, Vinland Saga')" --> B
+    B -- "2. Передача запроса через Webhook (HTTPS)" --> D
+    D -- "3. Сохранение предпочтений\nв SQLite (TCP/IP)" --> F
+    D -- "4. Поиск характеристик манг\nпо векторным эмбеддингам (HTTPS)" --> J
+    D -- "5. Запрос рекомендаций\nс контекстом (HTTPS)" --> G
+    G -- "6. Использование контекста\nиз базы знаний (HTTPS)" --> J
+    D -- "7. Формирование персонализированной\nподборки рекомендаций" --> B
+    B -- "8. Отправка пользователю\nсписка похожих манг" --> A
 ```
