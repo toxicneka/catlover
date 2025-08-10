@@ -5,37 +5,33 @@ graph TD
     end
     
     subgraph "Telegram"
-        B[Бот MangaRec]
+        B[КиноБот]
         I[Telegram Bot API]
     end
     
-    subgraph "Backend (Python)"
-        D[Основной модуль]
-        E[Обработчик запросов]
-        F[Фильтр рекомендаций]
+    subgraph "Backend"
+        D[AI Agent Python]
     end
     
     subgraph "Хранилища"
         S[(SQLite: логи/предпочтения)]
-        C[Кэш Redis/Memcached]
+        V[Vector DB]
     end
     
     subgraph "Внешние сервисы"
-        M[MyAnimeList API v2]
-        G[GigaChat API]
+        K[Kinopoisk API]
+        GC[GigaChat API]
     end
 
-    A -- MTProto/TCP --> B
-    B -- HTTPS Webhook --> D
-    D --> E
-    E -- HTTPS REST --> M
-    E -- HTTPS REST --> G
-    F -- SQLite TCP --> S
-    D -- Ответ HTTPS --> I
-    I --> A
-    
-    %% Внутренние связи
-    E --> F
-    F --> D
-    D -- Кэширование TCP --> C
+    A -- "MTProto/TCP" --> B
+    B -- "HTTPS Webhook" --> D
+    D -- "SQL over TCP" --> S
+    D -- "gRPC/HTTP" --> V
+    D -- "HTTPS REST" --> K
+    D -- "HTTPS REST" --> GC
+    D -- "HTTPS Bot API" --> I
+    I -- "MTProto/TCP" --> A
+
+    GC -- "Генерация эмбеддингов" --> V
+    K -- "Обновление метаданных" --> V
 ```
