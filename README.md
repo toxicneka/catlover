@@ -28,6 +28,6 @@ graph TD
     D -- "HTTPS/REST или gRPC" --> J
     D -- "HTTPS/GigaChat API" --> G
     G -- "HTTPS (Embeddings)" --> J
-    D -- "HTTPS/Telegram Bot API" --> B  %% Ключевое изменение!
+    D -- "HTTPS/Telegram Bot API" --> B
     B -- "MTProto/TCP" --> A
 ```
