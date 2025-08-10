@@ -1,11 +1,11 @@
 ```mermaid
 graph TD
     subgraph "Клиент"
-        A[Пользователь Telegram]
+        A[Пользователь/Группа]
     end
 
     subgraph "Telegram"
-        B[Telegram Bot]
+        B[Frontend Bot]
         I[Telegram API]
     end
 
@@ -14,21 +14,22 @@ graph TD
     end
 
     subgraph "Хранилища"
-        F[(SQLite <i>User Preferences</i>)]
-        J[["VectorDB <br/>Chroma/Qdrant"]]
+        E[(Google Sheets <i>User Types</i>)]
+        F[(SQLite <i>Group Reports</i>)]
+        J[RAG Knowledge Base]
     end
 
     subgraph "Внешние сервисы"
-        G{{LLM <i>GigaChat</i>}}
+        G{{LLM <i>Gemini</i>}}
     end
 
-    A -- "MTProto/TCP" --> B
-    B -- "HTTPS/Webhook" --> D
-    D -- "SQL/TCP" --> F
-    D -- "HTTPS/REST" --> J
-    D -- "HTTPS/Embeddings API" --> G
-    D -- "HTTPS/GigaChat API" --> G
-    G -- "Векторные представления" --> J
-    D -- "HTTPS/Bot API" --> B
-    B -- "MTProto/TCP" --> A
+    A -- MTProto/TCP --> B
+    B -- Webhook по HTTPS --> D
+    D -- Чтение/запись по HTTPS --> E
+    D -- Чтение/запись по TCP/IP --> F
+    D -- Запрос шаблонов по HTTPS --> J
+    D -- Анализ типов по HTTPS --> G
+    D -- Получение данных чата по HTTPS --> I
+    G -- Использует контекст по HTTPS --> J
+    I -- История сообщений <i>Состав группы</i> (API Telegram-бота, HTTPS) --> D
 ```
