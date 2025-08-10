@@ -45,3 +45,4 @@ graph TD
     D -- Кэширование<br><i>gRPC</i> --> J
     D -- Аудит логов<br><i>TCP/IP</i> --> F
 ```
+
