@@ -1,5 +1,4 @@
 ```mermaid
-```mermaid
 graph TD
     subgraph "Клиент"
         A[Пользователь Telegram]
@@ -26,18 +25,17 @@ graph TD
         G[GigaChat API]
     end
 
-    A -- "MTProto/TCP" --> B
-    B -- "HTTPS Webhook" --> D
+    A -- MTProto/TCP --> B
+    B -- HTTPS Webhook --> D
     D --> E
-    E -- "HTTPS REST" --> M
-    E -- "HTTPS REST" --> G
-    F -- "SQLite TCP" --> S
-    D -- "Ответ HTTPS" --> I
+    E -- HTTPS REST --> M
+    E -- HTTPS REST --> G
+    F -- SQLite TCP --> S
+    D -- Ответ HTTPS --> I
     I --> A
     
     %% Внутренние связи
     E --> F
     F --> D
-    D -- "Кэширование TCP" --> C
-```
+    D -- Кэширование TCP --> C
 ```
