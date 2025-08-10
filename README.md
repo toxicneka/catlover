@@ -1,35 +1,35 @@
 ```mermaid
 graph TD
     subgraph "Клиент"
-        A[Пользователь/Беседа]
+        A[Пользователь Telegram] 
     end
 
     subgraph "Telegram"
-        B[Frontend Bot]
+        B[Telegram-бот]
         I[Telegram API]
     end
 
     subgraph "Backend"
-        D[AI Agent <i>Python</i>]
+        D[AI Agent Python]
     end
 
     subgraph "Хранилища"
-        E[(Google Sheets <i>User Types</i>)]
-        F[(SQLite <i>Group Reports</i>)]
         J[RAG Knowledge Base]
+        P[(PostgreSQL)]
     end
 
     subgraph "Внешние сервисы"
-        G{{LLM <i>Gemini</i>}}
+        O[OpenDota API]
+        L[LLM Core]
     end
 
     A -- MTProto/TCP --> B
-    B -- Webhook по HTTPS --> D
-    D -- Чтение/запись по HTTPS --> E
-    D -- Чтение/запись по SQL --> F
-    D -- Запрос шаблонов по HTTPS --> J
-    D -- Анализ типов по HTTPS --> G
-    D -- Получение данных чата по HTTPS --> I
-    G -- Использует контекст по HTTPS --> J
-    I -- История сообщений <i>Состав группы</i> (API Telegram-бота, HTTPS) --> D
+    B -- Вебхук HTTPS --> D
+    D -- HTTPS REST --> O
+    D -- HTTPS REST --> L
+    D -- HTTPS REST --> J
+    D -- SQL over TCP --> P
+    L -- HTTPS REST --> J
+    D -- HTTPS Bot API --> I
+    I -- HTTPS Bot API --> D
 ```
