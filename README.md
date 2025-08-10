@@ -1,7 +1,7 @@
 ```mermaid
 graph TD
     subgraph "Клиент"
-        A[Пользователь/Группа]
+        A[Пользователь/Беседа]
     end
 
     subgraph "Telegram"
@@ -26,7 +26,7 @@ graph TD
     A -- MTProto/TCP --> B
     B -- Webhook по HTTPS --> D
     D -- Чтение/запись по HTTPS --> E
-    D -- Чтение/запись по TCP/IP --> F
+    D -- Чтение/запись по SQL --> F
     D -- Запрос шаблонов по HTTPS --> J
     D -- Анализ типов по HTTPS --> G
     D -- Получение данных чата по HTTPS --> I
