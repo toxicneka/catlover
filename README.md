@@ -15,7 +15,7 @@ graph TD
 
     subgraph "Хранилища"
         F[(SQLite <i>User Preferences</i>)]
-        J[RAG Knowledge Base <i>MangaDB</i>]
+        J[["VectorDB <br/>Chroma/Qdrant"]]
     end
 
     subgraph "Внешние сервисы"
@@ -23,11 +23,12 @@ graph TD
     end
 
     A -- "MTProto/TCP" --> B
-    B -- "HTTPS (Webhook)" --> D
-    D -- "SQL over TCP/IP" --> F
-    D -- "HTTPS/REST или gRPC" --> J
+    B -- "HTTPS/Webhook" --> D
+    D -- "SQL/TCP" --> F
+    D -- "HTTPS/REST" --> J
+    D -- "HTTPS/Embeddings API" --> G
     D -- "HTTPS/GigaChat API" --> G
-    G -- "HTTPS (Embeddings)" --> J
-    D -- "HTTPS/Telegram Bot API" --> B
+    G -- "Векторные представления" --> J
+    D -- "HTTPS/Bot API" --> B
     B -- "MTProto/TCP" --> A
 ```
