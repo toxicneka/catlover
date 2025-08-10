@@ -22,12 +22,12 @@ graph TD
         G{{LLM <i>GigaChat</i>}}
     end
 
-    A -- Отправка списка любимых тайтлов\n(например: 'Berserk, Vagabond, Vinland Saga') --> B
-    B -- Передача запроса через Webhook (HTTPS) --> D
-    D -- Сохранение предпочтений\nв SQLite (TCP/IP) --> F
-    D -- Поиск характеристик манг\nпо векторным эмбеддингам (HTTPS) --> J
-    D -- Запрос рекомендаций\nс контекстом (HTTPS) --> G
-    G -- Использование контекста\nиз базы знаний (HTTPS) --> J
-    D -- Формирование персонализированной\nподборки рекомендаций --> B
-    B -- Отправка пользователю\nсписка похожих манг --> A
+    A -- "MTProto/TCP" --> B
+    B -- "HTTPS (Webhook)" --> D
+    D -- "SQL over TCP/IP" --> F
+    D -- "HTTPS/REST или gRPC" --> J
+    D -- "HTTPS/GigaChat API" --> G
+    G -- "HTTPS (Embeddings)" --> J
+    D -- "HTTPS/Telegram Bot API" --> B  %% Ключевое изменение!
+    B -- "MTProto/TCP" --> A
 ```
