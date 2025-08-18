@@ -46,12 +46,4 @@ graph TD
     AK --> AL[Обновить SQLite]
     AL --> AM[Отправить отчет в чат]
     
-    %% Common elements
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style C fill:#bbf,stroke:#333
-    style V fill:#cfc,stroke:#333
-    style AM fill:#cfc,stroke:#333
-    style L fill:#ff9,stroke:#333
-    style S fill:#f96,stroke:#333
-    style AI fill:#f96,stroke:#333
 ```
