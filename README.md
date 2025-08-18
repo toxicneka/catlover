@@ -1,37 +1,57 @@
 ```mermaid
 graph TD
-    subgraph "Клиент"
-        A[Пользователь Telegram]
-    end
+    A[Пользователь отправляет команду] --> B{Тип команды}
+    B -->|/start| C[Отправить приветствие и инструкции]
+    B -->|/test| D[Проверить наличие типа в Google Sheets]
+    B -->|/report| E[Проверить дату последнего отчета в SQLite]
     
-    subgraph "Telegram"
-        B[КиноБот]
-        I[Telegram Bot API]
-    end
+    %% /test branch
+    D --> F{Тип существует?}
+    F -->|Да| G[Показать тип, предложить перепрохождение]
+    G --> H{Ответ: Да?}
+    H -->|Да| I[Начать тестирование]
+    H -->|Нет| J[Завершить процесс]
+    F -->|Нет| I
     
-    subgraph "Backend"
-        D[AI Agent Python]
-    end
+    I --> K[Отправить правила теста]
+    K --> L[Цикл вопросов: 1-10]
+    L --> M[Задать вопрос]
+    M --> N[Получить ответ]
+    N --> O{Длина >500?}
+    O -->|Да| P[Запросить сокращение] --> N
+    O -->|Нет| Q[Сохранить ответ]
+    Q --> R{Остались вопросы?}
+    R -->|Да| L
+    R -->|Нет| S[Отправить в LLM+RAG для анализа]
+    S --> T[Определить тип личности]
+    T --> U[Сгенерировать отчет]
+    U --> V[Сохранить в Google Sheets]
     
-    subgraph "Хранилища"
-        S[(SQLite: логи/предпочтения)]
-        V[Vector DB]
-    end
+    %% /report branch
+    E --> W{Отчет сегодня генерировался?}
+    W -->|Да| X[Сообщить: 'Повторите завтра'] --> Y[Завершить]
+    W -->|Нет| Z[Получить состав группы через Telegram API]
+    Z --> AA[Сравнить с SQLite]
+    AA --> AB{Есть новые участники?}
+    AB -->|Да| AC[Отправить приглашение пройти /test]
+    AB -->|Нет| AD[Проверить % протестированных]
+    AC --> AD
     
-    subgraph "Внешние сервисы"
-        K[Kinopoisk API]
-        GC[GigaChat API]
-    end
-
-    A -- "MTProto/TCP" --> B
-    B -- "HTTPS Webhook" --> D
-    D -- "SQL over TCP" --> S
-    D -- "gRPC/HTTP" --> V
-    D -- "HTTPS REST" --> K
-    D -- "HTTPS REST" --> GC
-    D -- "HTTPS Bot API" --> I
-    I -- "MTProto/TCP" --> A
-
-    GC -- "Генерация эмбеддингов" --> V
-    K -- "Обновление метаданных" --> V
+    AD --> AE{% <70?}
+    AE -->|Да| AF[Сообщить: 'Недостаточно данных'] --> AG[Завершить]
+    AE -->|Нет| AH[Анализировать сообщения за 7 дней]
+    AH --> AI[LLM: выявить паттерны]
+    AI --> AJ[RAG: получить шаблоны]
+    AJ --> AK[Сгенерировать отчет]
+    AK --> AL[Обновить SQLite]
+    AL --> AM[Отправить отчет в чат]
+    
+    %% Common elements
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style C fill:#bbf,stroke:#333
+    style V fill:#cfc,stroke:#333
+    style AM fill:#cfc,stroke:#333
+    style L fill:#ff9,stroke:#333
+    style S fill:#f96,stroke:#333
+    style AI fill:#f96,stroke:#333
 ```
